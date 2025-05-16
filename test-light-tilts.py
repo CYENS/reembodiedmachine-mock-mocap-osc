@@ -6,7 +6,7 @@ from pythonosc.udp_client import SimpleUDPClient
 import numpy as np
 
 # default replay rate
-DEFAULT_FPS: float = 320
+DEFAULT_FPS: float = 14.0
 
 def replay(
         client: SimpleUDPClient,
@@ -16,8 +16,8 @@ def replay(
     try:
         while True:
             t0 = time.time()
-            pans = np.random.random(16 * 2)
-            client.send_message("/light/pan", pans)
+            tilts = np.random.random(16 * 2)
+            client.send_message("/light/tilts", tilts)
             dt = time.time() - t0
             sleep = period - dt
             if sleep > 0:
@@ -27,7 +27,7 @@ def replay(
 
 def main() -> None:
     parser = argparse.ArgumentParser(
-        description="Test /light/pans OSC messages, looping at a fixed FPS."
+        description="Test /light/tilts OSC messages, looping at a fixed FPS."
     )
     parser.add_argument(
         "--send-address",
@@ -51,7 +51,7 @@ def main() -> None:
     client = SimpleUDPClient(args.send_address, args.send_port)
 
     print(
-        f"▶️  Sending /light/pans "
+        f"▶️  Sending /light/tilts "
         f"→ {args.send_address}:{args.send_port} @ {args.fps} FPS"
     )
     replay(client, args.fps)

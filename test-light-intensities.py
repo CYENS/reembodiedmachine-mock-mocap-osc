@@ -37,7 +37,7 @@ def main() -> None:
     parser.add_argument(
         "--send-port",
         type=int,
-        default=9000,
+        default=57120,
         help="OSC target port (default: %(default)s)",
     )
     parser.add_argument(
